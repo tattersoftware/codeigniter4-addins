@@ -1,0 +1,41 @@
+{
+	"name": "tatter/addins",
+	"description": "Meta-package for tatter/* libraries for CodeIgniter 4",
+	"keywords": [
+		"codeigniter",
+		"codeigniter4",
+		"tatter",
+		"tattersoftware",
+		"libraries",
+		"packages"
+	],
+	"homepage": "https://github.com/tattersoftware/codeigniter4-addins",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Matthew Gatner",
+			"email": "mgatner@tattersoftware.com",
+			"homepage": "https://tattersoftware.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php" : "^7.0",
+		"tatter/alerts" : "^2.0",
+		"tatter/assets" : "^2.0",
+		"tatter/audits" : "^1.0",
+		"tatter/permits" : "^1.0",
+		"tatter/settings" : "^1.0",
+		"tatter/visits" : "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Tatter\\Addins\\": "src"
+		}
+	},
+	"scripts": {
+		"post-update-cmd": [
+			"composer dump-autoload"
+		]
+	}
+}
