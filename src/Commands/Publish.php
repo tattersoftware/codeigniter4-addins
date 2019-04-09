@@ -37,7 +37,7 @@ class Publish extends BaseCommand
 			// migrations
 			if (in_array('migration', $features)):
 				try {
-					CLI::write('Running migrations from Tatter\\{$library}', 'green');
+					CLI::write("Running migrations from Tatter\\{$library}", 'green');
 					$migrations->latest("\\Tatter\\{$library}");
 				}
 				catch (\Exception $e) {
@@ -63,8 +63,11 @@ class Publish extends BaseCommand
 		$sourceHash = md5_file($source);
 
 		$path = APPPATH . 'Controllers/BaseController.php';
-		$pathHash = md5_file($path);
-
+		if (is_file($path))
+			$pathHash = md5_file($path);
+		else
+			$pathHash = '';
+			
 		$vanillaHash = ROOTPATH . 'vendor/codeigniter4/framework/app/Controllers/BaseController.php';
 		$previousHash = $settings->baseControllerHash;
 		
@@ -92,7 +95,10 @@ class Publish extends BaseCommand
 		$sourceHash = md5_file($source);
 
 		$path = APPPATH . 'Models/BaseModel.php';
-		$pathHash = md5_file($path);
+		if (is_file($path))
+			$pathHash = md5_file($path);
+		else
+			$pathHash = '';
 
 		$previousHash = $settings->baseModelHash;
 		
@@ -148,7 +154,7 @@ class Publish extends BaseCommand
 			endif;
 		endforeach;
 		
-		CLI::write('Ready to go!', 'green');
+		CLI::write('Ready to go!');
 		CLI::write('You may want to run one of these follow-up commands:');
 		CLI::write("* php spark permits:add");
 		CLI::write("* php spark settings:add");
