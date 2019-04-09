@@ -16,6 +16,7 @@ class Publish extends BaseCommand
 		$config = new \Tatter\Addins\Config\Addins();
 		
 		// Config Files and Migrations
+		CLI::write('Checking migrations...');
 		$migrations = service('migrations');
 		foreach ($config->libraries as $library => $features):
 
@@ -36,6 +37,7 @@ class Publish extends BaseCommand
 			// migrations
 			if (in_array('migration', $features)):
 				try {
+					CLI::write('Running migrations from Tatter\\{$library}', 'green');
 					$migrations->latest("\\Tatter\\{$library}");
 				}
 				catch (\Exception $e) {
@@ -77,8 +79,10 @@ class Publish extends BaseCommand
 		elseif (! empty($previousHash) && $previousHash!=$sourceHash && $pathHash==$previousHash)
 			$replaceFlag = true;
 		
-		if ($replaceFlag)
+		if ($replaceFlag):
+			CLI::write('Replacing BaseController with library default', 'green');
 			copy($source, $path);
+		endif;
 
 		// store the hash for future runs
 		$settings->baseControllerHash = $sourceHash;
@@ -100,8 +104,10 @@ class Publish extends BaseCommand
 		elseif (! empty($previousHash) && $previousHash!=$sourceHash && $pathHash==$previousHash)
 			$replaceFlag = true;
 		
-		if ($replaceFlag)
+		if ($replaceFlag):
+			CLI::write('Replacing BaseModel with library default', 'green');
 			copy($source, $path);
+		endif;
 
 		// store the hash for future runs
 		$settings->baseModelHash = $sourceHash;
@@ -143,8 +149,8 @@ class Publish extends BaseCommand
 		endforeach;
 		
 		CLI::write('Ready to go!', 'green');
-		CLI::write('You may want to run some of these follow-up commands:');
-		CLI::write("\t* php spark permits:add");
-		CLI::write("\t* php spark settings:add");
+		CLI::write('You may want to run one of these follow-up commands:');
+		CLI::write("* php spark permits:add");
+		CLI::write("* php spark settings:add");
 	}
 }
