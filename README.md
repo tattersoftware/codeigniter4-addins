@@ -3,7 +3,8 @@ Meta-package for tatter/* libraries for CodeIgniter 4
 
 ## Installation
 
-Install via Composer: `> composer require tatter/addins`
+* Install via Composer: `> composer require tatter/addins`
+* Run: `> php spark tatter:publish`
 
 ## Included
 
