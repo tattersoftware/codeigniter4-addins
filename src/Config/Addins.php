@@ -6,7 +6,7 @@ class Addins extends BaseConfig
 {
 	
 	// libraries and their features
-	protected $libraries = [
+	public $libraries = [
 		'Assets'   => ['config'],
 		'Alerts'   => ['config'],
 		'Audits'   => ['config', 'migration'],
