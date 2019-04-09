@@ -53,7 +53,7 @@ class Publish extends BaseCommand
 		foreach ($config->settings as $name => $setting):
 			// check for existing setting
 			if (! $settingModel->where('name', $name)->first()):
-				// create the defautl version
+				// create the default version
 				$settingModel->save($setting);
 			endif;
 		endforeach;

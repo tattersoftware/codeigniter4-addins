@@ -38,7 +38,7 @@ class Addins extends BaseConfig
 				'summary'    => 'Site theme to use',
 				'protected'  => 1,
 			],
-			'siteTimezone' => [
+			'serverTimezone' => [
 				'scope'      => 'global',
 				'name'       => 'serverTimezone',
 				'content'    => 'America/New_York',
