@@ -35,10 +35,12 @@ class Publish extends BaseCommand
 			
 			// migrations
 			if (in_array('migration', $features)):
-				try
+				try {
 					$migrations->latest("\\Tatter\\{$library}");
-				catch (\Exception $e)
+				}
+				catch (\Exception $e) {
 					CLI::write("Unable to migrate library '{$library}'", 'red');
+				}
 			endif;
 			
 		endforeach;
@@ -138,7 +140,7 @@ class Publish extends BaseCommand
 				endif;
 				copy($source, $path);
 			endif;
-		endif;
+		endforeach;
 		
 		CLI::write('Ready to go!', 'green');
 		CLI::write('You may want to run some of these follow-up commands:');
