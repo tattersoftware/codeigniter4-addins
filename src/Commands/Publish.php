@@ -21,7 +21,7 @@ class Publish extends BaseCommand
 
 			// config files
 			if (in_array('config', $features)):
-				$source = ROOTPATH . 'vendor/tatter/codeigniter4-' . strtolower($library). "/{$library}.php.example";
+				$source = ROOTPATH . 'vendor/tatter/' . strtolower($library). "/{$library}.php.example";
 				if (! is_file($source)):
 					throw new \Exception("Unable to locate config file: {$source}");
 				endif;
@@ -57,7 +57,7 @@ class Publish extends BaseCommand
 		endforeach;
 		
 		// BaseController
-		$source = ROOTPATH . 'vendor/tatter/codeigniter4-addins/examples/BaseController.php';
+		$source = ROOTPATH . 'vendor/tatter/addins/examples/BaseController.php';
 		$sourceHash = md5_file($source);
 
 		$path = APPPATH . 'Controllers/BaseController.php';
@@ -84,7 +84,7 @@ class Publish extends BaseCommand
 		$settings->baseControllerHash = $sourceHash;
 		
 		// BaseModel
-		$source = ROOTPATH . 'vendor/tatter/codeigniter4-addins/examples/BaseModel.php';
+		$source = ROOTPATH . 'vendor/tatter/addins/examples/BaseModel.php';
 		$sourceHash = md5_file($source);
 
 		$path = APPPATH . 'Models/BaseModel.php';
@@ -107,7 +107,7 @@ class Publish extends BaseCommand
 		$settings->baseModelHash = $sourceHash;
 		
 		// Alerts method
-		$source = ROOTPATH . "vendor/tatter/codeigniter4-addins/examples/header.php";
+		$source = ROOTPATH . "vendor/tatter/addins/examples/header.php";
 		$path = APPPATH . "Views/templates/header.php";
 		if (is_file($path)):
 			$contents = file_get_contents($path);
@@ -125,7 +125,7 @@ class Publish extends BaseCommand
 		
 		// Assets methods
 		foreach (['header', 'footer'] as $location):
-			$source = ROOTPATH . "vendor/tatter/codeigniter4-addins/examples/{$location}.php";
+			$source = ROOTPATH . "vendor/tatter/addins/examples/{$location}.php";
 			$path = APPPATH . "Views/templates/{$location}.php";
 			if (is_file($path)):
 				$contents = file_get_contents($path);
