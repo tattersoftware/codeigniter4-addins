@@ -28,7 +28,7 @@ class Publish extends BaseCommand
 				endif;
 				
 				// check for existing file
-				$path = APPPATH . 'Config/' . strtolower("{$library}.php");
+				$path = APPPATH . "Config/{$library}.php";
 				if (! is_file($path)):
 					copy($source, $path);
 				endif;
