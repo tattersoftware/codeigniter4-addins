@@ -154,6 +154,14 @@ class Publish extends BaseCommand
 			endif;
 		endforeach;
 		
+		// auth_helper
+		$source = ROOTPATH . "vendor/tatter/addins/examples/auth_helper.php";
+		$path = APPPATH . "Helpers/auth_helper.php";
+		if (! is_file($path)):
+			CLI::write('Adding auth_helper for authentication wrapping', 'green');
+			copy($source, $path);
+		endif;
+		
 		CLI::write('Ready to go!');
 		CLI::write('You may want to run one of these follow-up commands:');
 		CLI::write("* php spark permits:add");
