@@ -27,6 +27,7 @@
 		"tatter/permits" : "^1.0",
 		"tatter/reports" : "^1.0",
 		"tatter/settings" : "^1.0",
+		"tatter/themes" : "^1.0",
 		"tatter/visits" : "^1.0"
 	},
 	"autoload": {

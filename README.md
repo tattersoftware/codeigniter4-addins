@@ -14,4 +14,5 @@ Meta-package for tatter/* libraries for CodeIgniter 4
 * [Tatter/Permits](https://github.com/tattersoftware/codeigniter4-permits)
 * [Tatter/Reports](https://github.com/tattersoftware/codeigniter4-reports)
 * [Tatter/Settings](https://github.com/tattersoftware/codeigniter4-settings)
+* [Tatter/Themes](https://github.com/tattersoftware/codeigniter4-themes)
 * [Tatter/Visits](https://github.com/tattersoftware/codeigniter4-visits)

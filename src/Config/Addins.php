@@ -11,7 +11,9 @@ class Addins extends BaseConfig
 		'Alerts'   => ['config'],
 		'Audits'   => ['config', 'migration'],
 		'Permits'  => ['config', 'migration'],
+		'Reports'  => [],
 		'Settings' => ['config', 'migration'],
+		'Themes'   => ['migration'],
 		'Visits'   => ['config', 'migration'],
 	];
 	
@@ -35,8 +37,8 @@ class Addins extends BaseConfig
 				'scope'      => 'user',
 				'name'       => 'theme',
 				'content'    => 'Default',
-				'summary'    => 'Site theme to use',
-				'protected'  => 1,
+				'summary'    => 'Site display theme',
+				'protected'  => 0,
 			],
 			'serverTimezone' => [
 				'scope'      => 'global',
