@@ -36,7 +36,7 @@ class Addins extends BaseConfig
 			'theme' => [
 				'scope'      => 'user',
 				'name'       => 'theme',
-				'content'    => 'Default',
+				'content'    => '1',
 				'summary'    => 'Site display theme',
 				'protected'  => 0,
 			],
