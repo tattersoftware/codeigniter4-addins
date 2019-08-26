@@ -7,8 +7,9 @@ class Addins extends BaseConfig
 	
 	// libraries and their features
 	public $libraries = [
-		'Assets'   => ['config'],
+		'Agents'   => ['config', 'migration'],
 		'Alerts'   => ['config'],
+		'Assets'   => ['config'],
 		'Audits'   => ['config', 'migration'],
 		'Permits'  => ['config', 'migration'],
 		'Reports'  => [],

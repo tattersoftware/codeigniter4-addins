@@ -153,6 +153,10 @@ class Publish extends BaseCommand
 				copy($source, $path);
 			endif;
 		endforeach;
+		
+		// Check for and register any handlers
+		CLI::write('Registering handlers...');
+		$this->call('handlers:register');
 
 		CLI::write('Ready to go!');
 		CLI::write('You may want to run one of these follow-up commands:');

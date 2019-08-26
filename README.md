@@ -8,6 +8,7 @@ Meta-package for tatter/* libraries for CodeIgniter 4
 
 ## Included
 
+* [Tatter/Agents](https://github.com/tattersoftware/codeigniter4-agents)
 * [Tatter/Alerts](https://github.com/tattersoftware/codeigniter4-alerts)
 * [Tatter/Assets](https://github.com/tattersoftware/codeigniter4-assets)
 * [Tatter/Audits](https://github.com/tattersoftware/codeigniter4-audits)
