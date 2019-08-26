@@ -39,7 +39,7 @@ class Publish extends BaseCommand
 				try {
 					CLI::write("Running migrations from Tatter\\{$library}", 'green');
 					$migrations->setNamespace("Tatter\\{$library}");
-					$migrations->progress();
+					$migrations->latest();
 				}
 				catch (\Exception $e) {
 					CLI::write("Unable to migrate library '{$library}'", 'red');
