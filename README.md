@@ -1,5 +1,5 @@
 # Tatter\Addins
-Meta-package for tatter/* libraries for CodeIgniter 4
+Meta-package of Tatter modules for CodeIgniter 4
 
 ## Installation
 
@@ -19,3 +19,6 @@ Meta-package for tatter/* libraries for CodeIgniter 4
 * [Tatter/Themes](https://github.com/tattersoftware/codeigniter4-themes)
 * [Tatter/Visits](https://github.com/tattersoftware/codeigniter4-visits)
 
+## See also
+
+[Lighter](https://github.com/tattersoftware/lighter) - Project launcher for CodeIgniter 4

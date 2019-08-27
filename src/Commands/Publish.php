@@ -2,63 +2,53 @@
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-
 use Tatter\Settings\Models\SettingModel;
 
 class Publish extends BaseCommand
 {
     protected $group       = 'Tatter';
     protected $name        = 'tatter:publish';
-    protected $description = 'Integrates tatter/* addins with your database and /app directory (safe to rerun).';
+    protected $description = 'Integrates Tatter modules with your database and /app directory (safe to rerun).';
 
     public function run(array $params)
     {
 		$config = new \Tatter\Addins\Config\Addins();
 		
-		// Config Files and Migrations
-		CLI::write('Checking migrations...');
-		$migrations = service('migrations');
-		foreach ($config->libraries as $library => $features):
-
-			// config files
-			if (in_array('config', $features)):
+		// Check for database connectivity
+    	$db = db_connect();
+    	try
+    	{
+    	   	$db->connect();
+			$settings = service('settings');
+		}
+		catch (\Exception $e)
+		{
+			CLI::write('Warning! Could not connect to the database: ' . $e->getMessage(), 'yellow');
+			CLI::write('Migrations and Settings will need to be handled later...', 'yellow');
+			$db = false;
+		}
+		
+		// Merge config files
+		CLI::write('Integrating config files...');
+		foreach ($config->libraries as $library => $features)
+		{
+			if (in_array('config', $features))
+			{
 				$source = ROOTPATH . 'vendor/tatter/' . strtolower($library). "/bin/{$library}.php";
-				if (! is_file($source)):
+				if (! is_file($source))
+				{
 					throw new \Exception("Unable to locate config file: {$source}");
-				endif;
+				}
 				
 				// check for existing file
 				$path = APPPATH . "Config/{$library}.php";
-				if (! is_file($path)):
+				if (! is_file($path))
+				{
 					copy($source, $path);
-				endif;
-			endif;
-			
-			// migrations
-			if (in_array('migration', $features)):
-				try {
-					CLI::write("Running migrations from Tatter\\{$library}", 'green');
-					$migrations->setNamespace("Tatter\\{$library}");
-					$migrations->latest();
 				}
-				catch (\Exception $e) {
-					CLI::write("Unable to migrate library '{$library}'", 'red');
-				}
-			endif;
-			
-		endforeach;
-		
-		// Settings
-		$settings = service('settings');
-		$settingModel = new settingModel();
-		foreach ($config->settings as $name => $setting):
-			// check for existing setting
-			if (! $settingModel->where('name', $name)->first()):
-				// create the default version
-				$settingModel->save($setting);
-			endif;
-		endforeach;
-		
+			}
+		}
+				
 		// BaseController
 		$source = ROOTPATH . 'vendor/tatter/addins/bin/BaseController.php';
 		$sourceHash = md5_file($source);
@@ -70,7 +60,7 @@ class Publish extends BaseCommand
 			$pathHash = '';
 			
 		$vanillaHash = ROOTPATH . 'vendor/codeigniter4/framework/app/Controllers/BaseController.php';
-		$previousHash = $settings->baseControllerHash;
+		$previousHash = $db ? $settings->baseControllerHash : '';
 		
 		// check if the file is missing
 		$replaceFlag = false;
@@ -83,13 +73,15 @@ class Publish extends BaseCommand
 		elseif (! empty($previousHash) && $previousHash!=$sourceHash && $pathHash==$previousHash)
 			$replaceFlag = true;
 		
-		if ($replaceFlag):
+		if ($replaceFlag)
+		{
 			CLI::write('Replacing BaseController with library default', 'green');
 			copy($source, $path);
-		endif;
+		}
 
 		// store the hash for future runs
-		$settings->baseControllerHash = $sourceHash;
+		if ($db)
+			$settings->baseControllerHash = $sourceHash;
 		
 		// BaseModel
 		$source = ROOTPATH . 'vendor/tatter/addins/bin/BaseModel.php';
@@ -101,7 +93,7 @@ class Publish extends BaseCommand
 		else
 			$pathHash = '';
 
-		$previousHash = $settings->baseModelHash;
+		$previousHash = $db ? $settings->baseModelHash : '';
 		
 		// check if the file is missing
 		$replaceFlag = false;
@@ -117,7 +109,8 @@ class Publish extends BaseCommand
 		endif;
 
 		// store the hash for future runs
-		$settings->baseModelHash = $sourceHash;
+		if ($db)
+			$settings->baseModelHash = $sourceHash;
 		
 		// Alerts method
 		$source = ROOTPATH . "vendor/tatter/addins/bin/header.php";
@@ -137,7 +130,8 @@ class Publish extends BaseCommand
 		endif;
 		
 		// Assets methods
-		foreach (['header', 'footer'] as $location):
+		foreach (['header', 'footer'] as $location)
+		{
 			$source = ROOTPATH . "vendor/tatter/addins/bin/{$location}.php";
 			$path = APPPATH . "Views/templates/{$location}.php";
 			if (is_file($path)):
@@ -153,15 +147,56 @@ class Publish extends BaseCommand
 				endif;
 				copy($source, $path);
 			endif;
-		endforeach;
+		}
 		
-		// Check for and register any handlers
-		CLI::write('Registering handlers...');
-		$this->call('handlers:register');
-
+		if ($db)
+		{
+			// Migrations
+			CLI::write('Checking migrations...');
+			$migrations = service('migrations');
+			foreach ($config->libraries as $library => $features)
+			{
+				// migrations
+				if ($db && in_array('migration', $features))
+				{
+					try {
+						CLI::write("Running migrations from Tatter\\{$library}", 'green');
+						$migrations->setNamespace("Tatter\\{$library}");
+						$migrations->latest();
+					}
+					catch (\Exception $e) {
+						CLI::write("Unable to migrate library '{$library}'", 'red');
+					}
+				}
+			}
+		
+			// Settings
+			$settingModel = new settingModel();
+			foreach ($config->settings as $name => $setting)
+			{
+				// check for existing setting
+				if (! $settingModel->where('name', $name)->first())
+				{
+					// create the default version
+					$settingModel->save($setting);
+				}
+			}
+		
+			// Check for and register any handlers
+			CLI::write('Registering handlers...');
+			$this->call('handlers:register');
+		}
+		
 		CLI::write('Ready to go!');
-		CLI::write('You may want to run one of these follow-up commands:');
-		CLI::write("* php spark permits:add");
-		CLI::write("* php spark settings:add");
+		if ($db)
+		{
+			CLI::write('You may want to run one of these follow-up commands:');
+			CLI::write("* php spark permits:add");
+			CLI::write("* php spark settings:add");
+		}
+		else
+		{
+			CLI::write('(You may want to re-run this after setting up your database.)');
+		}
 	}
 }
