@@ -13,6 +13,7 @@ class Publish extends BaseCommand
     public function run(array $params)
     {
 		$config = new \Tatter\Addins\Config\Addins();
+		$migrations = service('migrations');
 		
 		// Check for database connectivity
     	$db = db_connect();
@@ -26,6 +27,26 @@ class Publish extends BaseCommand
 			CLI::write('Warning! Could not connect to the database: ' . $e->getMessage(), 'yellow');
 			CLI::write('Migrations and Settings will need to be handled later...', 'yellow');
 			$db = false;
+		}
+		
+		// If the database succeeded then setup Settings first so we can use it
+		if ($db)
+		{
+			// Migrate the table
+			$migrations->setNamespace('Tatter\\Settings');
+			$migrations->latest();
+		
+			// Add Settings templates
+			$settingModel = new settingModel();
+			foreach ($config->settings as $name => $setting)
+			{
+				// check for existing setting
+				if (! $settingModel->where('name', $name)->first())
+				{
+					// create the default version
+					$settingModel->save($setting);
+				}
+			}
 		}
 		
 		// Merge config files
@@ -153,7 +174,6 @@ class Publish extends BaseCommand
 		{
 			// Migrations
 			CLI::write('Checking migrations...');
-			$migrations = service('migrations');
 			foreach ($config->libraries as $library => $features)
 			{
 				// migrations
@@ -167,18 +187,6 @@ class Publish extends BaseCommand
 					catch (\Exception $e) {
 						CLI::write("Unable to migrate library '{$library}'", 'red');
 					}
-				}
-			}
-		
-			// Settings
-			$settingModel = new settingModel();
-			foreach ($config->settings as $name => $setting)
-			{
-				// check for existing setting
-				if (! $settingModel->where('name', $name)->first())
-				{
-					// create the default version
-					$settingModel->save($setting);
 				}
 			}
 		

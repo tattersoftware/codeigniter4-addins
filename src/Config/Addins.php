@@ -7,15 +7,17 @@ class Addins extends BaseConfig
 	
 	// libraries and their features
 	public $libraries = [
-		'Agents'   => ['config', 'migration'],
-		'Alerts'   => ['config'],
-		'Assets'   => ['config'],
-		'Audits'   => ['config', 'migration'],
-		'Permits'  => ['config', 'migration'],
-		'Reports'  => [],
-		'Settings' => ['config', 'migration'],
-		'Themes'   => ['migration'],
-		'Visits'   => ['config', 'migration'],
+		'Agents'    => ['config', 'migration'],
+		'Alerts'    => ['config'],
+		'Assets'    => ['config'],
+		'Audits'    => ['config', 'migration'],
+		'Permits'   => ['config', 'migration'],
+		'Relations' => ['config'],
+		'Reports'   => [],
+		'Settings'  => ['config', 'migration'],
+		'Schemas'   => ['config'],
+		'Themes'    => ['migration'],
+		'Visits'    => ['config', 'migration'],
 	];
 	
 	// default settings
