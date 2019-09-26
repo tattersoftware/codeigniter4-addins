@@ -37,16 +37,7 @@ class Publish extends BaseCommand
 			$migrations->latest();
 		
 			// Add Settings templates
-			$settingModel = new settingModel();
-			foreach ($config->settings as $name => $setting)
-			{
-				// check for existing setting
-				if (! $settingModel->where('name', $name)->first())
-				{
-					// create the default version
-					$settingModel->save($setting);
-				}
-			}
+			$this->seed('\Tatter\\Settings\Database\Seeds\SettingsSeeder');
 		}
 		
 		// Merge config files
@@ -81,17 +72,13 @@ class Publish extends BaseCommand
 			$pathHash = '';
 			
 		$vanillaHash = ROOTPATH . 'vendor/codeigniter4/framework/app/Controllers/BaseController.php';
-		$previousHash = $db ? $settings->baseControllerHash : '';
 		
 		// check if the file is missing
 		$replaceFlag = false;
 		if (! is_file($path))
 			$replaceFlag = true;
-		// check if the file is unmodified from the original
+		// check if the file is unmodified from the framework original
 		elseif ($pathHash == $vanillaHash)
-			$replaceFlag = true;
-		// check if the file is a previous version
-		elseif (! empty($previousHash) && $previousHash!=$sourceHash && $pathHash==$previousHash)
 			$replaceFlag = true;
 		
 		if ($replaceFlag)
@@ -99,10 +86,6 @@ class Publish extends BaseCommand
 			CLI::write('Replacing BaseController with library default', 'green');
 			copy($source, $path);
 		}
-
-		// store the hash for future runs
-		if ($db)
-			$settings->baseControllerHash = $sourceHash;
 
 		// Alerts method
 		$source = ROOTPATH . "vendor/tatter/addins/bin/header.php";
