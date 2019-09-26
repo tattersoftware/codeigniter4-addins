@@ -103,36 +103,7 @@ class Publish extends BaseCommand
 		// store the hash for future runs
 		if ($db)
 			$settings->baseControllerHash = $sourceHash;
-		
-		// BaseModel
-		$source = ROOTPATH . 'vendor/tatter/addins/bin/BaseModel.php';
-		$sourceHash = md5_file($source);
 
-		$path = APPPATH . 'Models/BaseModel.php';
-		if (is_file($path))
-			$pathHash = md5_file($path);
-		else
-			$pathHash = '';
-
-		$previousHash = $db ? $settings->baseModelHash : '';
-		
-		// check if the file is missing
-		$replaceFlag = false;
-		if (! is_file($path))
-			$replaceFlag = true;
-		// check if the file is a previous version
-		elseif (! empty($previousHash) && $previousHash!=$sourceHash && $pathHash==$previousHash)
-			$replaceFlag = true;
-		
-		if ($replaceFlag):
-			CLI::write('Replacing BaseModel with library default', 'green');
-			copy($source, $path);
-		endif;
-
-		// store the hash for future runs
-		if ($db)
-			$settings->baseModelHash = $sourceHash;
-		
 		// Alerts method
 		$source = ROOTPATH . "vendor/tatter/addins/bin/header.php";
 		$path = APPPATH . "Views/templates/header.php";
@@ -189,16 +160,25 @@ class Publish extends BaseCommand
 					}
 				}
 			}
-		
+
 			// Check for and register any handlers
 			CLI::write('Registering handlers...');
 			$this->call('handlers:register');
+
+			// Run an intial Agents check
+			CLI::write('Checking agents...');
+			try {
+				$this->call('agents:check');
+			}
+			catch (\Exception $e) {
+				CLI::write($e->getMessage(), 'yellow');
+			}
 		}
 		
 		CLI::write('Ready to go!');
 		if ($db)
 		{
-			CLI::write('You may want to run one of these follow-up commands:');
+			CLI::write('You may want to run some of these follow-up commands:');
 			CLI::write("* php spark permits:add");
 			CLI::write("* php spark settings:add");
 		}

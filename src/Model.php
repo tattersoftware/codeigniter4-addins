@@ -1,18 +1,24 @@
-<?php namespace App\Models;
+<?php namespace Tatter\Addins;
 
-use Tatter\Permits\Models\PModel;
-
-class BaseModel extends PModel
+class Model extends \Tatter\Relations\Model
 {
-	// Audits
+	// Traits
 	use \Tatter\Audits\Traits\AuditsTrait;
+	use \Tatter\Permits\Traits\PermitsTrait;
+
+	// Audits
 	protected $afterInsert = ['auditInsert'];
 	protected $afterUpdate = ['auditUpdate'];
 	protected $afterDelete = ['auditDelete'];
 
 	// Permits
-	protected $tableMode  = 0664;
-	protected $rowMode    = 0664;
+	/* Default mode:
+	 * 4 Domain list, no create
+	 * 6 Owner  read, write
+	 * 6 Group  read, write
+	 * 4 World  read, no write
+	 */	
+	protected $mode = 04664;
 	
 	// name of the user ID in this model's objects
 	protected $userKey;
