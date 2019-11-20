@@ -1,10 +1,11 @@
 <?php namespace Tatter\Addins;
 
-class Model extends \Tatter\Relations\Model
+class Model extends \CodeIgniter\Model
 {
 	// Traits
 	use \Tatter\Audits\Traits\AuditsTrait;
 	use \Tatter\Permits\Traits\PermitsTrait;
+	use \Tatter\Relations\Traits\ModelTrait;
 
 	// Audits
 	protected $afterInsert = ['auditInsert'];
