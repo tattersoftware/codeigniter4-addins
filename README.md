@@ -8,6 +8,7 @@ Meta-package of Tatter modules for CodeIgniter 4
 
 ## Included
 
+* [Tatter/Accounts](https://github.com/tattersoftware/codeigniter4-accounts)
 * [Tatter/Agents](https://github.com/tattersoftware/codeigniter4-agents)
 * [Tatter/Alerts](https://github.com/tattersoftware/codeigniter4-alerts)
 * [Tatter/Assets](https://github.com/tattersoftware/codeigniter4-assets)

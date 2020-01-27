@@ -1,11 +1,12 @@
 {
 	"name": "tatter/addins",
-	"description": "Meta-package for tatter/* libraries for CodeIgniter 4",
+	"description": "Meta-package of Tatter modules for CodeIgniter 4",
 	"keywords": [
 		"codeigniter",
 		"codeigniter4",
-		"tatter",
 		"tattersoftware",
+		"tatter",
+		"modules",
 		"libraries",
 		"packages"
 	],
@@ -20,7 +21,8 @@
 		}
 	],
 	"require": {
-		"php" : "^7.0",
+		"php" : ">=7.2",
+		"tatter/accounts" : "^1.0",
 		"tatter/agents" : "^1.0",
 		"tatter/alerts" : "^2.0",
 		"tatter/assets" : "^2.0",
