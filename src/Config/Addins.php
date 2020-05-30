@@ -11,6 +11,7 @@ class Addins extends BaseConfig
 		'Alerts'    => ['config'],
 		'Assets'    => ['config'],
 		'Audits'    => ['config', 'migration'],
+		'Patches'   => ['config'],
 		'Permits'   => ['config', 'migration'],
 		'Relations' => ['config'],
 		'Reports'   => [],
