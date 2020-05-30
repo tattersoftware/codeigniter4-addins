@@ -14,6 +14,7 @@ Meta-package of Tatter modules for CodeIgniter 4
 * [Tatter/Assets](https://github.com/tattersoftware/codeigniter4-assets)
 * [Tatter/Audits](https://github.com/tattersoftware/codeigniter4-audits)
 * [Tatter/Handlers](https://github.com/tattersoftware/codeigniter4-handlers)
+* [Tatter/Patches](https://github.com/tattersoftware/codeigniter4-patches)
 * [Tatter/Permits](https://github.com/tattersoftware/codeigniter4-permits)
 * [Tatter/Relations](https://github.com/tattersoftware/codeigniter4-relations)
 * [Tatter/Reports](https://github.com/tattersoftware/codeigniter4-reports)
