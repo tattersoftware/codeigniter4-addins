@@ -29,7 +29,6 @@
 		"tatter/assets": "^2.0",
 		"tatter/audits": "^1.0",
 		"tatter/outbox": "^2.0",
-		"tatter/patches": "^1.0",
 		"tatter/permits": "^2.0",
 		"tatter/relations": "^2.0",
 		"tatter/reports": "^1.1",
