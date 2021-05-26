@@ -32,7 +32,7 @@
 		"tatter/permits": "^2.0",
 		"tatter/relations": "^2.0",
 		"tatter/reports": "^1.1",
-		"tatter/settings": "^1.0",
+		"tatter/settings": "^1.0 || ^2.0",
 		"tatter/themes": "^1.0",
 		"tatter/visits": "^1.0"
 	},
