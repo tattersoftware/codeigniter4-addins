@@ -23,27 +23,26 @@
 		}
 	],
 	"require": {
-		"php" : ">=7.2",
+		"php" : "^7.3 || ^8.0",
 		"tatter/agents": "^1.1",
-		"tatter/alerts": "^2.0",
-		"tatter/assets": "^2.0",
+		"tatter/alerts": "^3.0",
+		"tatter/assets": "^3.0",
 		"tatter/audits": "^1.0",
 		"tatter/outbox": "^2.0",
-		"tatter/permits": "^2.0",
+		"tatter/permits": "^3.0",
+		"tatter/preferences": "^1.0",
 		"tatter/relations": "^2.0",
-		"tatter/reports": "^1.1",
-		"tatter/settings": "^1.0 || ^2.0",
-		"tatter/themes": "^1.0",
+		"tatter/themes": "^2.0",
 		"tatter/visits": "^1.0"
+	},
+	"require-dev": {
+		"tatter/imposter": "^1.0"
 	},
 	"autoload": {
 		"psr-4": {
 			"Tatter\\Addins\\": "src"
 		}
 	},
-	"scripts": {
-		"post-update-cmd": [
-			"composer dump-autoload"
-		]
-	}
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
