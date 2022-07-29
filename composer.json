@@ -24,7 +24,6 @@
 	"homepage": "https://github.com/tattersoftware/codeigniter4-addins",
 	"require": {
 		"php": "^7.4 || ^8.0",
-		"tatter/agents": "^1.1",
 		"tatter/alerts": "^3.0",
 		"tatter/assets": "^3.0",
 		"tatter/audits": "^1.0",

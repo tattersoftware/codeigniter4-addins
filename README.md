@@ -8,11 +8,9 @@ Meta-package of Tatter modules for CodeIgniter 4
 
 ## Included
 
-* [Tatter/Agents](https://github.com/tattersoftware/codeigniter4-agents)
 * [Tatter/Alerts](https://github.com/tattersoftware/codeigniter4-alerts)
 * [Tatter/Assets](https://github.com/tattersoftware/codeigniter4-assets)
 * [Tatter/Audits](https://github.com/tattersoftware/codeigniter4-audits)
-* [Tatter/Handlers](https://github.com/tattersoftware/codeigniter4-handlers)
 * [Tatter/Outbox](https://github.com/tattersoftware/codeigniter4-outbox)
 * [Tatter/Permits](https://github.com/tattersoftware/codeigniter4-permits)
 * [Tatter/Relations](https://github.com/tattersoftware/codeigniter4-relations)
@@ -28,7 +26,6 @@ Meta-package of Tatter modules for CodeIgniter 4
 
 * **Addins** used to include self-publishing, but this feature is deprecated in favor of
 CodeIgniter's `Generators`.
-
 * `Tatter\Addins\Model` has been removed
-
 * **Accounts** has been deprecated and will no longer be included in this suite
+* **Agents** has been removed temporarily until it is generally compatible with the latest `Handlers`
